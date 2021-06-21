@@ -2,11 +2,9 @@ load("@io_bazel_rules_go//go:def.bzl", "go_test")
 
 go_test(
     name = "test_test",
-    srcs = glob(["*.go"]),
-    data = [
-        "//infra/src",
-    ],
+    srcs = ["stack_test.go"],
     deps = [
+        "//infra/shared",
         "@com_github_gruntwork_io_terratest//modules/terraform",
         "@com_github_stretchr_testify//assert",
     ],

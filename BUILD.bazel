@@ -10,7 +10,7 @@ exports_files([
     "jest.config.js",
 ])
 
-# gazelle:prefix github.com/subnova/tfproject
+# gazelle:prefix github.com/subnova/tfpackage
 gazelle(name = "gazelle")
 
 alias(
