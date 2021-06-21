@@ -1,0 +1,35 @@
+{
+  "name": "tfpackage",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@bazel/bazelisk": "^1.9.0",
+    "@bazel/buildifier": "latest",
+    "@bazel/ibazel": "^0.15.10",
+    "@bazel/typescript": "^3.6.0",
+    "@jest/core": "^27.0.4",
+    "@nestjs/cli": "^7.6.0",
+    "@nestjs/testing": "^7.6.18",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^10.17.60",
+    "@types/supertest": "^2.0.11",
+    "c8": "^7.7.3",
+    "jest-cli": "^27.0.4",
+    "patch-package": "^6.4.7",
+    "supertest": "^6.1.3",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "build": "bazel build //...",
+    "test": "bazel test //...",
+    "coverage": "bazel coverage //...",
+    "postinstall": "patch-package"
+  },
+  "dependencies": {
+    "@nestjs/common": "^7.6.18",
+    "@nestjs/core": "^7.6.18",
+    "@nestjs/platform-express": "^7.6.18",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.6.7"
+  }
+}

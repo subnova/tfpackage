@@ -1,0 +1,17 @@
+diff --git a/node_modules/@bazel/typescript/internal/ts_project.bzl b/node_modules/@bazel/typescript/internal/ts_project.bzl
+index 303bd30..9e470ac 100755
+--- a/node_modules/@bazel/typescript/internal/ts_project.bzl
++++ b/node_modules/@bazel/typescript/internal/ts_project.bzl
+@@ -227,6 +227,12 @@ def _ts_project_impl(ctx):
+             for dep in ctx.attr.deps
+             if TsConfigInfo in dep
+         ])),
++        coverage_common.instrumented_files_info(
++            ctx,
++            source_attributes = ["srcs"],
++            dependency_attributes = ["deps"],
++            extensions = ["ts", "tsx"],
++        ),    
+     ]
+ 
+     # Only provide DeclarationInfo if there are some typings.

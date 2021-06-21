@@ -1,0 +1,12 @@
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+package(default_visibility = ["//visibility:public"])
+
+pkg_tar(
+    name = "src",
+    srcs = glob(["*.tf"]) + ["//:terraform"],
+    mode = "0440",
+    modes = {
+        "terraform": "0550",
+    },
+)

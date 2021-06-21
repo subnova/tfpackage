@@ -1,0 +1,20 @@
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+package(default_visibility = ["//visibility:public"])
+
+pkg_tar(
+    name = "src",
+    srcs = glob([
+        "*.tf",
+        "*.sh",
+    ]) + [
+        "//:terraform",
+        "//apps/backend/src:docker.tar",
+    ],
+    mode = "0440",
+    modes = {
+        "terraform": "0550",
+        "push.sh": "0550",
+        "image_id.sh": "0550",
+    },
+)

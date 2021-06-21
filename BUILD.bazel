@@ -1,0 +1,48 @@
+# Add rules here to build your software
+# See https://docs.bazel.build/versions/master/build-ref.html#BUILD_files
+
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files([
+    "tsconfig.json",
+    "jest.config.js",
+])
+
+# gazelle:prefix github.com/subnova/tfproject
+gazelle(name = "gazelle")
+
+alias(
+    name = "terraform",
+    actual = select({
+        "@bazel_tools//src/conditions:darwin": "@terraform_darwin//:terraform",
+        "@bazel_tools//src/conditions:linux_x86_64": "@terraform_linux//:terraform",
+        "@bazel_tools//src/conditions:windows": "@terraform_windows//:terraform.exe",
+    }),
+)
+
+# Added to support downloading different versions of terraform
+platform(
+    name = "osx",
+    constraint_values = [
+        "@bazel_tools//platforms:osx",
+        "@bazel_tools//platforms:x86_64",
+    ],
+)
+
+platform(
+    name = "linux_x86_64",
+    constraint_values = [
+        "@bazel_tools//platforms:linux",
+        "@bazel_tools//platforms:x86_64",
+    ],
+)
+
+platform(
+    name = "windows",
+    constraint_values = [
+        "@bazel_tools//platforms:windows",
+        "@bazel_tools//platforms:x86_64",
+    ],
+)

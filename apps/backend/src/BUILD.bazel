@@ -1,0 +1,69 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load("//rules:jest.bzl", "jest_test")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+
+package(default_visibility = ["//visibility:public"])
+
+ts_project(
+    name = "src",
+    srcs = glob(
+        ["*.ts"],
+        exclude = ["*.spec.ts"],
+    ),
+    declaration = True,
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "@npm//@nestjs/common",
+        "@npm//@nestjs/core",
+        "@npm//@types/node",
+    ],
+)
+
+ts_project(
+    name = "test.src",
+    srcs = glob(["*.spec.ts"]),
+    declaration = True,
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        ":src",
+        "@npm//@nestjs/testing",
+        "@npm//@types/jest",
+    ],
+)
+
+jest_test(
+    name = "test",
+    srcs = [],
+    deps = [
+        ":test.src",
+        "@npm//c8",
+    ],
+)
+
+nodejs_binary(
+    name = "server",
+    configuration_env_vars = ["PORT"],
+    data = [
+        ":src",
+    ],
+    entry_point = ":main.ts",
+)
+
+# --platforms=@build_bazel_rules_nodejs//toolchains/node:linux_amd64
+container_image(
+    name = "base",
+    base = "@nodejs_image_base//image",
+    env = {
+        "PORT": "80",
+    },
+    ports = ["80"],
+)
+
+# --platforms=@build_bazel_rules_nodejs//toolchains/node:linux_amd64
+nodejs_image(
+    name = "docker",
+    base = ":base",
+    binary = ":server",
+)

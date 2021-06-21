@@ -1,0 +1,26 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load("//rules:jest.bzl", "jest_test")
+
+ts_project(
+    name = "test.src",
+    srcs = glob(["*.spec.ts"]),
+    declaration = True,
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "//apps/backend/src",
+        "@npm//@nestjs/common",
+        "@npm//@nestjs/testing",
+        "@npm//@types/jest",
+        "@npm//@types/supertest",
+        "@npm//supertest",
+    ],
+)
+
+jest_test(
+    name = "test",
+    srcs = [],
+    deps = [
+        ":test.src",
+        "@npm//c8",
+    ],
+)
