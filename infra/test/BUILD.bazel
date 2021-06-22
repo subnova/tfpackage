@@ -3,6 +3,9 @@ load("@io_bazel_rules_go//go:def.bzl", "go_test")
 go_test(
     name = "test_test",
     srcs = ["stack_test.go"],
+    data = [
+        "//infra/src",
+    ],
     deps = [
         "//infra/shared",
         "@com_github_gruntwork_io_terratest//modules/terraform",

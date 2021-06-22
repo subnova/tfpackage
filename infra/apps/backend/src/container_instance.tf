@@ -4,13 +4,16 @@ resource "null_resource" "push_backend" {
   }
 
   provisioner "local-exec" {
-    command = "./push.sh"
+    command = "./push.sh ${data.azurerm_container_registry.registry.login_server}"
   }
 }
 
 data "external" "container_image" {
   program = ["./image_id.sh"]
   depends_on = [null_resource.push_backend]
+  query = {
+    acr_login_server: data.azurerm_container_registry.registry.login_server
+  }
 }
 
 resource "azurerm_container_group" "backend" {
@@ -23,7 +26,7 @@ resource "azurerm_container_group" "backend" {
 
   image_registry_credential {
     password = azuread_service_principal_password.backend.value
-    server = var.acr_login_server
+    server = data.azurerm_container_registry.registry.login_server
     username = azuread_service_principal.backend.application_id
   }
 

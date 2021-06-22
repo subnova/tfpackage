@@ -3,4 +3,15 @@ load("@io_bazel_rules_go//go:def.bzl", "go_test")
 go_test(
     name = "test_test",
     srcs = ["stack_test.go"],
+    data = [
+        "//infra/apps/backend/src",
+    ] + glob(["*.tf"]),
+    deps = [
+        "//infra/shared",
+        "@com_github_gruntwork_io_terratest//modules/http-helper",
+        "@com_github_gruntwork_io_terratest//modules/terraform",
+        "@com_github_stretchr_testify//assert",
+    ],
+    size = "small",
+    timeout = "moderate",
 )

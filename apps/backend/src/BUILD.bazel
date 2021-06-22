@@ -3,6 +3,7 @@ load("//rules:jest.bzl", "jest_test")
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("//rules:ensure_platform.bzl", "ensure_platform")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -66,4 +67,14 @@ nodejs_image(
     name = "docker",
     base = ":base",
     binary = ":server",
+    target_compatible_with = [
+      "@platforms//cpu:x86_64",
+      "@platforms//os:linux",
+    ]
+)
+
+ensure_platform(
+    name = "docker_linux",
+    dep = ":docker.tar",
+    platforms = "@build_bazel_rules_nodejs//toolchains/node:linux_amd64",
 )

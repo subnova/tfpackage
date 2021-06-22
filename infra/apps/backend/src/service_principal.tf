@@ -7,6 +7,7 @@ resource "azuread_application" "backend" {
 
 resource "azuread_service_principal" "backend" {
   application_id = azuread_application.backend.application_id
+  tags = []
 }
 
 resource "azuread_service_principal_password" "backend" {
@@ -17,5 +18,11 @@ resource "azuread_service_principal_password" "backend" {
 resource "azurerm_role_assignment" "backend_contributor" {
   scope = data.azurerm_subscription.main.id
   role_definition_name = "Contributor"
+  principal_id = azuread_service_principal.backend.id
+}
+
+resource "azurerm_role_assignment" "backend_acrpull" {
+  scope = data.azurerm_container_registry.registry.id
+  role_definition_name = "AcrPull"
   principal_id = azuread_service_principal.backend.id
 }

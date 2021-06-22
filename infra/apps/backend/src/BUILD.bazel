@@ -9,7 +9,7 @@ pkg_tar(
         "*.sh",
     ]) + [
         "//:terraform",
-        "//apps/backend/src:docker.tar",
+        "//apps/backend/src:docker_linux",
     ],
     mode = "0440",
     modes = {
