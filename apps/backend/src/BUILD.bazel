@@ -36,12 +36,12 @@ ts_project(
 
 jest_test(
     name = "test",
+    size = "small",
     srcs = [],
     deps = [
         ":test.src",
         "@npm//c8",
     ],
-    size = "small",
 )
 
 nodejs_binary(
@@ -69,9 +69,9 @@ nodejs_image(
     base = ":base",
     binary = ":server",
     target_compatible_with = [
-      "@platforms//cpu:x86_64",
-      "@platforms//os:linux",
-    ]
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
 )
 
 ensure_platform(

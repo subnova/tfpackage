@@ -2,19 +2,19 @@ load("@io_bazel_rules_go//go:def.bzl", "go_test")
 
 go_test(
     name = "test_test",
+    size = "small",
+    timeout = "long",
     srcs = ["stack_test.go"],
     data = [
         "//infra/apps/backend/src",
     ] + glob(["*.tf"]),
+    tags = [
+        "integration",
+    ],
     deps = [
         "//infra/shared",
         "@com_github_gruntwork_io_terratest//modules/http-helper",
         "@com_github_gruntwork_io_terratest//modules/terraform",
         "@com_github_stretchr_testify//assert",
     ],
-    size = "small",
-    timeout = "long",
-    tags = [
-        "integration",
-    ]
 )

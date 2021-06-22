@@ -1,0 +1,3 @@
+exports_files([
+    "terraform_test/validate.go",
+])

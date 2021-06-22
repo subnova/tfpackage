@@ -18,10 +18,10 @@ ts_project(
 
 jest_test(
     name = "test",
+    size = "small",
     srcs = [],
     deps = [
         ":test.src",
         "@npm//c8",
     ],
-    size = "small",
 )

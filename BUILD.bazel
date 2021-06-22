@@ -11,6 +11,7 @@ exports_files([
 ])
 
 # gazelle:prefix github.com/subnova/tfpackage
+# gazelle:exclude rules/terraform_test
 gazelle(name = "gazelle")
 
 alias(
@@ -51,6 +52,6 @@ test_suite(
     name = "precommit",
     tests = [
         "//apps/backend/src:test",
-        "//apps/backend/test:test",
+        "//apps/backend/test",
     ],
 )
