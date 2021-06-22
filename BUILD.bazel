@@ -23,7 +23,16 @@ alias(
     }),
 )
 
-# Added to support downloading different versions of terraform
+alias(
+    name = "tflint",
+    actual = select({
+        "@bazel_tools//src/conditions:darwin": "@tflint_darwin//:tflint",
+        "@bazel_tools//src/conditions:linux_x86_64": "@tflint_linux//:tflint",
+        "@bazel_tools//src/conditions:windows": "@tflint_windows//:tflint.exe",
+    }),
+)
+
+# Added to support downloading different versions of terraform/tflint to extract SHAs
 platform(
     name = "osx",
     constraint_values = [

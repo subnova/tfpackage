@@ -85,3 +85,32 @@ def fetch_dependencies():
         ],
     )
 
+    # tflint
+    _TFLINT_VERSION = "v0.29.1"
+
+    http_archive(
+        name = "tflint_darwin",
+        build_file_content = """exports_files(["tflint"])""",
+        sha256 = "ba8493f37e75962ea7bac3c557113b021885b991aa2f3c3de7c50d123050f4dd",
+        urls = [
+            "https://github.com/terraform-linters/tflint/releases/download/%s/tflint_darwin_amd64.zip" % _TFLINT_VERSION
+        ],
+    )
+
+    http_archive(
+        name = "tflint_linux",
+        build_file_content = """exports_files(["tflint"])""",
+        sha256 = "797ad3cc1d29c0e6a19885c24c00cecc9def53fa4ab418583a82891cc36a979a",
+        urls = [
+            "https://github.com/terraform-linters/tflint/releases/download/%s/tflint_linux_amd64.zip" % _TFLINT_VERSION
+        ],
+    )
+
+    http_archive(
+        name = "tflint_windows",
+        build_file_content = """exports_files(["tflint.exe"])""",
+        sha256 = "78cc691bf7010400d93f7c9cf44110448230225099650bc0e6f2139d59badd6c",
+        urls = [
+            "https://github.com/terraform-linters/tflint/releases/download/%s/tflint_windows_amd64.zip" % _TFLINT_VERSION
+        ],
+    )

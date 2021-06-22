@@ -1,5 +1,5 @@
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//rules:terraform_test.bzl", "terraform_validate_test")
+load("//rules:terraform_test.bzl", "terraform_validate_test", "terraform_lint_test")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -17,5 +17,14 @@ terraform_validate_test(
     size = "small",
     srcs = glob([
         "*.tf",
+    ]),
+)
+
+terraform_lint_test(
+    name = "lint",
+    size = "small",
+    srcs = glob([
+        "*.tf",
+        ".tflint.hcl",
     ]),
 )

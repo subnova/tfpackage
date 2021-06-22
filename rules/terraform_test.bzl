@@ -13,3 +13,13 @@ def terraform_validate_test(name, srcs, terraform_binary = "//:terraform", **kwa
         ],
         **kwargs,
     )
+
+def terraform_lint_test(name, srcs, tflint_binary = "//:tflint", **kwargs):
+    "A macro to run tflint on a set of sources"
+
+    native.sh_test(
+        name = name,
+        srcs = ["//rules:terraform_test/tflint.sh"],
+        data = srcs + [tflint_binary],
+        **kwargs,
+    )

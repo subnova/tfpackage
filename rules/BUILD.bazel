@@ -1,3 +1,4 @@
 exports_files([
     "terraform_test/validate.go",
+    "terraform_test/tflint.sh",
 ])

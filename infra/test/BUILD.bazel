@@ -10,6 +10,7 @@ go_test(
     ],
     tags = [
         "integration",
+        "manual",
     ],
     deps = [
         "//infra/shared",
