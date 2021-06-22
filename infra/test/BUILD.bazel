@@ -6,11 +6,10 @@ go_test(
     timeout = "moderate",
     srcs = ["stack_test.go"],
     data = [
-        "//infra/src",
+        "//infra/src:bundle",
     ],
     tags = [
         "integration",
-        "manual",
     ],
     deps = [
         "//infra/shared",

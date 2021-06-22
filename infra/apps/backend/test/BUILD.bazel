@@ -17,7 +17,6 @@ go_test(
     ] + glob(["*.tf"]),
     tags = [
         "integration",
-        "manual",
     ],
     deps = [
         "//infra/shared",
