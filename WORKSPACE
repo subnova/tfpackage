@@ -71,3 +71,9 @@ load(
 
 nodejs_image_repositories()
 
+load(
+    "@io_bazel_rules_docker//go:image.bzl",
+    go_image_repos = "repositories",
+)
+
+go_image_repos()

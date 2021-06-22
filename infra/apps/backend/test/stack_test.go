@@ -12,7 +12,7 @@ import (
 )
 
 func TestBackendAppStack(t *testing.T) {
-	stackDir, err := shared.ExtractStackPackage("infra/apps/backend/src/src.tar")
+	stackDir, err := shared.ExtractStackPackage("bundle.tar")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,6 +42,7 @@ func TestBackendAppStack(t *testing.T) {
 	// code under test
 	vars := terraform.OutputAll(t, terraformProviderFixtureOptions)
 	vars["env"] = envName
+	vars["local_image_name"] = "bazel/infra/apps/backend/test/container_fixture:docker"
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir:    stackDir,

@@ -17,3 +17,15 @@ variable "acr_name" {
   type = string
   description = "The name of the Azure Container Registry to use for storing the image"
 }
+
+variable "remote_image_name" {
+  type = string
+  description = "The name to use for the pushed image"
+  default = "backend"
+}
+
+variable "local_image_name" {
+  type = string
+  description = "The name of the local image to push"
+  default = "bazel/apps/backend/src:docker"
+}

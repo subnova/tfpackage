@@ -1,0 +1,45 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("//rules:ensure_platform.bzl", "ensure_platform")
+
+go_library(
+    name = "container_fixture_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/subnova/tfpackage/infra/apps/backend/test/container_fixture",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "container_fixture",
+    embed = [":container_fixture_lib"],
+    visibility = ["//visibility:public"],
+)
+
+# --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
+container_image(
+    name = "base",
+    base = "@go_image_base//image",
+    env = {
+        "PORT": "80",
+    },
+    ports = ["80"],
+)
+
+# --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
+go_image(
+    name = "docker",
+    base = ":base",
+    binary = ":container_fixture",
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+)
+
+ensure_platform(
+    name = "docker_linux",
+    dep = ":docker.tar",
+    platforms = "@io_bazel_rules_go//go/toolchain:linux_amd64",
+    visibility = ["//infra/apps/backend/test:__pkg__"],
+)

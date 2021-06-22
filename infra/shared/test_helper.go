@@ -11,10 +11,10 @@ import (
 	"time"
 )
 
-func ExtractStackPackage(packageName string) (string, error) {
-	stackPackage, err := bazel.Runfile(packageName)
+func ExtractStackPackage(tarName string) (string, error) {
+	stackPackage, err := findRunfile(tarName)
 	if err != nil {
-		return "", fmt.Errorf("unable to find stack package [%s] (is it included in the data attribute): %v", packageName, err)
+		return "", fmt.Errorf("unable to find stack package [%s] (is it included in the data attribute): %v", tarName, err)
 	}
 
 	stackDir, err := bazel.NewTmpDir("stack")
@@ -28,6 +28,20 @@ func ExtractStackPackage(packageName string) (string, error) {
 	}
 
 	return stackDir, nil
+}
+
+func findRunfile(fileName string) (string, error) {
+	runfiles, err := bazel.ListRunfiles()
+	if err != nil {
+		return "", err
+	}
+	for _, file := range runfiles {
+		if filepath.Base(file.Path) == fileName {
+			return file.Path, nil
+		}
+	}
+
+	return "", fmt.Errorf("%s not found in runfiles", fileName)
 }
 
 func untar(tarball, target string) error {

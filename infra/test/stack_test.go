@@ -9,7 +9,7 @@ import "github.com/gruntwork-io/terratest/modules/terraform"
 import "github.com/stretchr/testify/assert"
 
 func TestInfraStack(t *testing.T) {
-	stackDir, err := shared.ExtractStackPackage("infra/src/src.tar")
+	stackDir, err := shared.ExtractStackPackage("bundle.tar")
 	if err != nil {
 		t.Fatal(err)
 	}

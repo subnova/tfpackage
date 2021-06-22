@@ -4,7 +4,7 @@ resource "null_resource" "push_backend" {
   }
 
   provisioner "local-exec" {
-    command = "./push.sh ${data.azurerm_container_registry.registry.login_server}"
+    command = "./push.sh ${var.local_image_name} ${var.remote_image_name} ${data.azurerm_container_registry.registry.login_server}"
   }
 }
 
@@ -13,6 +13,7 @@ data "external" "container_image" {
   depends_on = [null_resource.push_backend]
   query = {
     acr_login_server: data.azurerm_container_registry.registry.login_server
+    remote_image_name: var.remote_image_name
   }
 }
 

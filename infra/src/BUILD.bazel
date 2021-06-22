@@ -1,10 +1,10 @@
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
-load("//rules:terraform_test.bzl", "terraform_validate_test", "terraform_lint_test")
+load("//rules:terraform_test.bzl", "terraform_lint_test", "terraform_validate_test")
 
 package(default_visibility = ["//visibility:public"])
 
 pkg_tar(
-    name = "src",
+    name = "bundle",
     srcs = glob(["*.tf"]) + ["//:terraform"],
     mode = "0440",
     modes = {

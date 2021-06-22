@@ -1,4 +1,11 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_test")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+pkg_tar(
+    name = "bundle",
+    srcs = ["//infra/apps/backend/test/container_fixture:docker_linux"],
+    deps = ["//infra/apps/backend/src:infra"],
+)
 
 go_test(
     name = "test_test",
@@ -6,7 +13,7 @@ go_test(
     timeout = "long",
     srcs = ["stack_test.go"],
     data = [
-        "//infra/apps/backend/src",
+        ":bundle",
     ] + glob(["*.tf"]),
     tags = [
         "integration",

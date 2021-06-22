@@ -1,6 +1,20 @@
 #!/usr/bin/env sh
 
-ACR_LOGIN_SERVER=$1
+LOCAL_IMAGE=$1
+if [ -z ${LOCAL_IMAGE} ]
+then
+    echo "Must specify the local image to push"
+    exit 1
+fi
+
+REMOTE_IMAGE=$2
+if [ -z ${REMOTE_IMAGE} ]
+then
+    echo "Must specify the remote image name to use"
+    exit 1
+fi
+
+ACR_LOGIN_SERVER=$3
 if [ -z ${ACR_LOGIN_SERVER} ]
 then
     echo "Must specify the login server for the Azure container registry"
@@ -22,5 +36,5 @@ cat <<EOF > docker-config/config.json
 EOF
 
 docker load -i docker.tar
-docker tag bazel/apps/backend/src:docker ${ACR_LOGIN_SERVER}/backend
-docker --config ./docker-config push ${ACR_LOGIN_SERVER}/backend
+docker tag ${LOCAL_IMAGE} ${ACR_LOGIN_SERVER}/${REMOTE_IMAGE}
+docker --config ./docker-config push ${ACR_LOGIN_SERVER}/${REMOTE_IMAGE}
