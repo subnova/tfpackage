@@ -32,7 +32,11 @@ func TestInfraStack(t *testing.T) {
 
 	terraform.InitAndApply(t, terraformOptions)
 
-	output := terraform.Output(t, terraformOptions, "acr_login_server")
-	assert.NotEmpty(t, output)
+	acrNameOutput := terraform.Output(t, terraformOptions, "acr_name")
+	assert.NotEmpty(t, acrNameOutput)
+	rgNameOutput := terraform.Output(t, terraformOptions, "rg_name")
+	assert.NotEmpty(t, rgNameOutput)
+	rgLocationOutput := terraform.Output(t, terraformOptions, "rg_location")
+	assert.NotEmpty(t, rgLocationOutput)
 }
 

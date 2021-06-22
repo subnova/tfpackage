@@ -41,6 +41,7 @@ jest_test(
         ":test.src",
         "@npm//c8",
     ],
+    size = "small",
 )
 
 nodejs_binary(

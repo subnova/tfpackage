@@ -46,3 +46,11 @@ platform(
         "@bazel_tools//platforms:x86_64",
     ],
 )
+
+test_suite(
+    name = "precommit",
+    tests = [
+        "//apps/backend/src:test",
+        "//apps/backend/test:test",
+    ],
+)

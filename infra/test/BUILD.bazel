@@ -11,4 +11,9 @@ go_test(
         "@com_github_gruntwork_io_terratest//modules/terraform",
         "@com_github_stretchr_testify//assert",
     ],
+    size = "small",
+    timeout = "moderate",
+    tags = [
+        "integration",
+    ]
 )

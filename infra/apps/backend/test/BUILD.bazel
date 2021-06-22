@@ -13,5 +13,8 @@ go_test(
         "@com_github_stretchr_testify//assert",
     ],
     size = "small",
-    timeout = "moderate",
+    timeout = "long",
+    tags = [
+        "integration",
+    ]
 )
