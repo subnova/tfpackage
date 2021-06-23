@@ -54,10 +54,6 @@ func TestBackendAppStack(t *testing.T) {
 			"AZURE_LOGGING_ENABLE_LOG_FILE": "false",
 		},
 
-		RetryableTerraformErrors: map[string]string{".*": "Azure is flaky"},
-		MaxRetries: 2,
-		TimeBetweenRetries: 5*time.Second,
-
 		NoColor: true,
 	})
 	defer terraform.Destroy(t, terraformOptions)

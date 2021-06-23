@@ -42,4 +42,6 @@ resource "azurerm_container_group" "backend" {
       protocol = "TCP"
     }
   }
+
+  depends_on = [azurerm_role_assignment.backend_acrpull]
 }
